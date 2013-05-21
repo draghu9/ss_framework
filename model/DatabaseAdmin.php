@@ -99,8 +99,10 @@ class DatabaseAdmin extends Controller {
 			echo "<p>Done!</p>";
 			$this->redirect($_GET['returnURL']);
 		} else {
-			$this->doBuild(isset($_REQUEST['quiet']) || isset($_REQUEST['from_installer']),
-				!isset($_REQUEST['dont_populate']));
+            //FASTER DEV BUILD
+            //replaced !isset($_REQUEST['dont_populate'] with isset($_REQUEST['populate']
+            //So populate isn't run by default - saves a few seconds..
+            $this->doBuild(isset($_REQUEST['quiet']) || isset($_REQUEST['from_installer']), isset($_REQUEST['populate']));
 		}
 	}
 
@@ -236,7 +238,11 @@ class DatabaseAdmin extends Controller {
 					singleton($dataClass)->requireDefaultRecords();
 				}
 			}
-		}
+        } else {
+            //FASTER DEV BUILD
+            //call out fact no populate has been done (this is now default)
+            echo "\n<p>No default database records created - run with &amp;populate=1 to do this.</p>\n\n";
+        }
 
 		touch(TEMP_FOLDER . '/database-last-generated-' .
 					str_replace(array('\\', '/', ':'), '.', Director::baseFolder()));
