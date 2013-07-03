@@ -261,10 +261,14 @@ class GridFieldAddExistingAutocompleter
 			return array('Title');
 		} else if($obj->hasDatabaseField('Name')) {
 			return array('Name');
-		} else {
-			return null;
-		}
+		} else if($obj::$searchable_fields){
+           $this->resultsFormat = "$".implode(", $", $obj::$searchable_fields);
+           return $obj::$searchable_fields;
+        } else {
+            return null;
+        }
 	}
+
 
 	/**
 	 * @param String The class of the object being searched for
