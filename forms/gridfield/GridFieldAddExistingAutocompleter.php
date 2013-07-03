@@ -195,7 +195,7 @@ class GridFieldAddExistingAutocompleter
 		// TODO Replace with DataList->filterAny() once it correctly supports OR connectives
 		$stmts = array();
 		foreach($searchFields as $searchField) {
-			$stmts[] .= sprintf('LOWER("%s") LIKE LOWER(\'%s%%\')', $searchField,
+			$stmts[] .= sprintf('LOWER("%s") LIKE LOWER(\'%%%s%%\')', $searchField,
 				Convert::raw2sql($request->getVar('gridfield_relationsearch')));
 		}
 		$results = $allList->where(implode(' OR ', $stmts))->subtract($gridField->getList());
