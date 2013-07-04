@@ -66,10 +66,10 @@ class Group extends DataObject {
 			new TabSet("Root",
 				new Tab('Members', _t('SecurityAdmin.MEMBERS', 'Members'),
 					new TextField("Title", $this->fieldLabel('Title')),
-					$parentidfield = DropdownField::create(						'ParentID', 
+					$parentidfield = TreeDropdownField::create('ParentID',
 						$this->fieldLabel('Parent'), 
-						Group::get()->exclude('ID', $this->ID)->map('ID', 'Breadcrumbs')
-					)->setEmptyString(' ')
+						'Group'
+					)
 				),
 
 				$permissionsTab = new Tab('Permissions', _t('SecurityAdmin.PERMISSIONS', 'Permissions'),
